@@ -22,6 +22,7 @@ import google.generativeai as genai
 from tkinter import *
 import tkinter.messagebox as tmsg
 from tkinter import scrolledtext as st
+import threading
 
 root = Tk()
 
@@ -33,10 +34,8 @@ print(response.text)
 '''
 
 # Key Variables
+global chat, model
 api_key="api-key"
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-2.0-flash')
-chat = model.start_chat(history=[])
 # response1 = chat.send_message("Hello, I have a cat.")
 ENTER_URL = StringVar()
 EAC = IntVar()
@@ -191,8 +190,26 @@ def initiate_ai_checking_system():
 	
 	display_log.config(state=DISABLED)
 
-# Training the AI Before Applying Changes To Tkinter Window
-train_artificial_intelligence()
+def enable_ai_checking_system():
+	global chat, model
+	ch1.config(text="Please Wait....")
+	try:
+		genai.configure(api_key=api_key)
+		model = genai.GenerativeModel('gemini-2.0-flash')
+		chat = model.start_chat(history=[])
+
+		# Training the AI Before Applying Changes To Tkinter Window
+		train_artificial_intelligence()
+	except:
+		tmsg.showerror('Error','Internet Access is Required to Use This Feature')
+		EAC.set(0)
+		root.update()
+
+	ch1.config(text="Enable Advanced Checking")
+
+def enable_ai_checking_thread():
+	t1 = threading.Thread(target=enable_ai_checking_system)
+	t1.start()
 
 # Creating Frames
 f1 = Frame(borderwidth=10,bg="white")
@@ -226,6 +243,7 @@ ch1 = Checkbutton(f1,
 	offvalue=0,
 	bg="white",
 	fg="black",
+	command=enable_ai_checking_thread,
 )
 display_log = st.ScrolledText(
 	bg="lightgrey",
