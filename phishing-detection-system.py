@@ -184,11 +184,12 @@ def custom_checking_algorithm(url):
 def initiate_ai_checking_system():
 	display_log.config(state=NORMAL)
 	display_log.delete(1.0,END)
-	b1.config(text="Please Wait...")
 
 	if ENTER_URL.get()==URL_EXAMPLE:
 		tmsg.showinfo('Info','Please Provide A Link To Begin Phishing Detection')
 		return
+
+	b1.config(text="Please Wait...")
 
 	if EAC.get() == 1:
 		t1 = threading.Thread(target=artificial_intelligence_algorithm(ENTER_URL.get()))
