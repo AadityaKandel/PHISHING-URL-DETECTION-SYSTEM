@@ -8,3 +8,8 @@ Because of that, you need to create your own API inorder to use the application.
 to generate your own api key. Then, you can replace the value of the variable called "api_key" with your own API KEY from Google and the app will run as intended.
 Thank You for using the app....
 
+# UPDATE V1.1
+Previously, without the API KEY, you were unable to use the application even though it is designed for ONLINE & OFFLINE mode. But now, I've added error-checking
+features, which allows it to work even if you do not possess an API KEY. However, I still reccommend you to generate your API KEY and use it for accurate solutions.
+Thank You.
+
