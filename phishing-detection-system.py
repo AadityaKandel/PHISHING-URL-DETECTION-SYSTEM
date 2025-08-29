@@ -106,7 +106,13 @@ Scenario 1: Response for Phishing Link
 Your link seems unsafe as it is the prime example of [what_type_of_phishing_attack_is_it] in which [how_is_it_executed]. In the url [url], [short_explanation].
 Example: Your link seems unsafe as it is the prime example of url_shorteners in which Common URL shorteners are used to hide the true destination. In the url "bit.ly/Hello", "bit.ly" is the example of url shortner and "/Hello" is the example of the shortened destination.
 
-Like this scenario, your job is only to give me the response of what the example shows. If there is another type of phishing attack, you can feel free to replace [what_type_of_phishing_attack_is_it] & [how_is_it_executed] respectively and same goes for [url] & [short_explanation] accordingly.
+Scenario 2: Response for Safe Link
+Your link seems safe as [url] is owned by an Official Company called [company_name]. Feel free to visit it without any concerns.
+Example: Your link seems same as "www.google.com" is owned by an Official Company called "Google". Feel free to visit it without any concerns. 
+
+Like these scenario, your job is only to give me the response of what the example shows. If there is another type of phishing attack, you can feel free to replace [what_type_of_phishing_attack_is_it] & [how_is_it_executed] respectively and same goes for [url] & [short_explanation] accordingly. However, if it is an actual & original URL, feel free to replace [url] & [company_name] from scenario 2 accordingly.
+
+
 Other than this, please do not give any extra response. Thank You for being in this session. Now, the questions will come in the format of links and your response is directed towards a single objective only.
 '''
 
@@ -178,16 +184,19 @@ def custom_checking_algorithm(url):
 def initiate_ai_checking_system():
 	display_log.config(state=NORMAL)
 	display_log.delete(1.0,END)
+	b1.config(text="Please Wait...")
 
 	if ENTER_URL.get()==URL_EXAMPLE:
 		tmsg.showinfo('Info','Please Provide A Link To Begin Phishing Detection')
 		return
 
 	if EAC.get() == 1:
-		artificial_intelligence_algorithm(ENTER_URL.get())
+		t1 = threading.Thread(target=artificial_intelligence_algorithm(ENTER_URL.get()))
+		t1.start()
 	else:
 		custom_checking_algorithm(ENTER_URL.get())
 	
+	b1.config(text="Check The Link")
 	display_log.config(state=DISABLED)
 
 def enable_ai_checking_system():
